@@ -54,18 +54,17 @@ class GtkUI(GtkPluginBase):
         def _on_get_ipaddress(ip_address):
             self.status_item = component.get("StatusBar").add_item(
                 text="Ext IP: %s" % ip_address,
-                callback=self._on_status_item_clicked,
                 tooltip="External IP Address")
 
-        client.ipstatusbar.get_ipaddress().addCallback(_on_get_ipaddress)
+        client.ipstatusbar.on_external_ip_alert_plugin_2().addCallback(_on_get_ipaddress)
 
     def disable(self):
         # Remove status item
         component.get("StatusBar").remove_item(self.status_item)
         del self.status_item
 
-    def _on_status_item_clicked(self, widget, event):
-        self.status_item.set_text("Updating...")
-        def _on_get_ipaddress(ip_address):
-            self.status_item.set_text("Ext IP: %s" % ip_address)
-        client.ipstatusbar.get_ipaddress().addCallback(_on_get_ipaddress)
+    #def _on_status_item_clicked(self, widget, event):
+    #    self.status_item.set_text("Updating...")
+    #    def _on_get_ipaddress(ip_address):
+    #        self.status_item.set_text("Ext IP: %s" % ip_address)
+    #    client.ipstatusbar.get_ipaddress().addCallback(_on_get_ipaddress)

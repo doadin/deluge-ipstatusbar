@@ -41,8 +41,10 @@ from deluge.log import LOG as log
 from deluge.plugins.pluginbase import CorePluginBase
 import deluge.component as component
 import deluge.configmanager
+import libtorrent as lt
 from deluge.core.rpcserver import export
 from urllib2 import urlopen
+from deluge.common import decode_string
 
 class Core(CorePluginBase):
     def enable(self):
@@ -53,8 +55,59 @@ class Core(CorePluginBase):
 
     def update(self):
         pass
+    #pass 1
+    #@export
+    #def get_ipaddress(self):
+        #ext_ip_address = urlopen('http://ifconfig.me/ip').read().rstrip()
+        #return ext_ip_address
+    #def on_external_ip_alert_2(alert):
+    #    print("got external_ip_alert: %s" % alert.message)
 
+    #@export		
+    #def on_external_ip_alert_plugin(alert):
+    #    ses = lt.session()
+    #    alert = ses.pop_alert()
+    #    while alert is not None:
+    #        alert_type = type(alert).__name__
+    #        if alert_type == "external_ip_alert":
+    #            on_external_ip_alert_2(alert)
+    #        alert = self.session.pop_alert()
+    #    print("got external_ip_alert: %s" % alert)
+    #    ext_ip_address = alert
+    #    return ext_ip_address
+
+    #pass 2
     @export
-    def get_ipaddress(self):
-        ext_ip_address = urlopen('http://ifconfig.me/ip').read().rstrip()
-        return ext_ip_address
+    def on_external_ip_alert_plugin_2(alert):
+        #print("got external_ip_alert: %s" % alert.message)
+        #ext_ip_address = alert
+        return alert.message
+
+    #@export		
+    #def on_external_ip_alert_plugin(alert):
+    ses = lt.session()
+    alert = ses.pop_alert()
+    while alert is not None:
+        alert_type = type(alert).__name__
+        if alert_type == "external_ip_alert":
+            on_external_ip_alert_2(alert)
+        alert = self.session.pop_alert()
+    #print("got external_ip_alert: %s" % alert.message)
+
+    #pass 3
+    #ses = lt.session()
+    #alert = self.session.pop_alert()
+    #alert = ses.pop_alert()
+    #while alert is not None:
+    #    alert_type = type(alert).__name__
+    #    if alert_type == "external_ip_alert":
+    #        on_external_ip_alert_plugin(alert)
+    #    alert = ses.pop_alert()
+    #    print alert
+
+    #@export
+    #def on_external_ip_alert_plugin(alert):
+    #    print("got external_ip_alert: %s" % alert)
+    #    ext_ip_address = alert
+    #    return ext_ip_address
+
