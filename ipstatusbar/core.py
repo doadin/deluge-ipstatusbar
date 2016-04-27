@@ -22,9 +22,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with deluge.    If not, write to:
-# 	The Free Software Foundation, Inc.,
-# 	51 Franklin Street, Fifth Floor
-# 	Boston, MA  02110-1301, USA.
+#   The Free Software Foundation, Inc.,
+#   51 Franklin Street, Fifth Floor
+#   Boston, MA  02110-1301, USA.
 #
 #    In addition, as a special exception, the copyright holders give
 #    permission to link the code of portions of this program with the OpenSSL
@@ -55,17 +55,14 @@ class Core(CorePluginBase):
     def update(self):
         pass
 
-    #pass 2
     @export
     def on_external_ip_alert_plugin(alert):
-        #print("got external_ip_alert: %s" % alert.message)
-        ext_ip_address = decode_string(alert.message)
-        return ext_ip_address 
-
-    ses = lt.session()
-    alert = self.session.pop_alert()
-    while alert is not None:
-        alert_type = type(alert).__name__
-        if alert_type == "external_ip_alert":
-            on_external_ip_alert_plugin(alert)
-        alert = self.session.pop_alert()
+        ses = lt.session()
+        alert = ses.pop_alert()
+        while alert is not None:
+            alert_type = type(alert).__name__
+            if alert_type == "external_ip_alert":
+                print("got external_ip_alert: %s" % decode_string(alert.message))
+                ext_ip_address = alert.message
+                return ext_ip_address
+            alert = ses.pop_alert()
