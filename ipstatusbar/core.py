@@ -57,9 +57,9 @@ class Core(CorePluginBase):
 
     #pass 2
     @export
-    def on_external_ip_alert_plugin_2(alert):
+    def on_external_ip_alert_plugin(alert):
         #print("got external_ip_alert: %s" % alert.message)
-        ext_ip_address = alert.message
+        ext_ip_address = decode_string(alert.message)
         return ext_ip_address 
 
     ses = lt.session()
@@ -67,5 +67,5 @@ class Core(CorePluginBase):
     while alert is not None:
         alert_type = type(alert).__name__
         if alert_type == "external_ip_alert":
-            on_external_ip_alert_2(alert)
+            on_external_ip_alert_plugin(alert)
         alert = self.session.pop_alert()

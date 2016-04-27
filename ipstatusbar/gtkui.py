@@ -56,7 +56,7 @@ class GtkUI(GtkPluginBase):
                 text="Ext IP: %s" % ip_address,
                 tooltip="External IP Address")
 
-        client.ipstatusbar.on_external_ip_alert_plugin_2().addCallback(_on_get_ipaddress)
+        client.ipstatusbar.on_external_ip_alert_plugin().addCallback(_on_get_ipaddress)
 
     def disable(self):
         # Remove status item
