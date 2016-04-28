@@ -57,12 +57,13 @@ class Core(CorePluginBase):
 
     @export
     def on_external_ip_alert_plugin(alert):
-        ses = lt.session()
+        ses = component.get("Core").session
         alert = ses.pop_alert()
         while alert is not None:
             alert_type = type(alert).__name__
+            print("%s: %s", alert_type, decode_string(alert.message()))
             if alert_type == "external_ip_alert":
-                print("got external_ip_alert: %s" % decode_string(alert.message))
+                print("got external_ip_alert: %s" % alert.message)
                 ext_ip_address = alert.message
                 return ext_ip_address
             alert = ses.pop_alert()
