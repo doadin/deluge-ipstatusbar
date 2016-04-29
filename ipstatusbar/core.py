@@ -62,7 +62,7 @@ class Core(CorePluginBase):
         log.debug("on_alert_external_ip")
         # Message Format: "external IP received: 0.0.0.0"
         self.ext_ip_address = alert.message().split(':')[1].strip()
-        log.info("address: %r", ip_addr)
+        log.info("address: %r", self.ext_ip_address)
 
         #ext_ip_address = urlopen('http://ifconfig.me/ip').read().rstrip()
     @export

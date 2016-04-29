@@ -55,7 +55,7 @@ class GtkUI(GtkPluginBase):
             callback=self._on_status_item_clicked,
             tooltip="External IP Address")
 
-        client.ipstatusbar.get_ipaddress().addCallback(self.on_get_ipaddress)
+        client.ipstatusbar.get_ipaddress().addCallback(self._on_get_ipaddress)
 
     def disable(self):
         # Remove status item
@@ -63,11 +63,11 @@ class GtkUI(GtkPluginBase):
         del self.status_item
 
     def update(self):
-        client.ipstatusbar.get_ipaddress().addCallback(self.on_get_ipaddress)
+        client.ipstatusbar.get_ipaddress().addCallback(self._on_get_ipaddress)
 
     def _on_status_item_clicked(self, widget, event):
         self.status_item.set_text("clicked")
 
-    def _on_get_ipaddress(ip_address):
+    def _on_get_ipaddress(self, ip_address):
         if ip_address:
             self.status_item.set_text("Ext IP: %s" % ip_address)
