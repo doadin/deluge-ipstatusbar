@@ -44,6 +44,7 @@ import deluge.configmanager
 import libtorrent as lt
 from deluge.core.rpcserver import export
 from deluge.common import decode_string
+from urllib2 import urlopen
 
 class Core(CorePluginBase):
     def enable(self):
@@ -66,4 +67,7 @@ class Core(CorePluginBase):
                 print("got external_ip_alert: %s" % alert.message)
                 ext_ip_address = alert.message
                 return ext_ip_address
+            #else:
+            #    ext_ip_address = urlopen('http://ifconfig.me/ip').read().rstrip()
+            #    return ext_ip_address
             alert = ses.pop_alert()
